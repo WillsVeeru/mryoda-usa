@@ -1,0 +1,151 @@
+/* Mr Yoda USA: small additions on top of the live site's compiled CSS.
+   Everything here reuses the site's own tokens (--brand, --ink, --hair-strong, --gutter, ...). */
+
+/* header Join pill */
+.hdr-join { padding: 10px 18px; font-size: 14px; margin-left: 4px; }
+
+/* Home header: keep the glass treatment over the hero, then use the white pill once scrolling. */
+[data-home-header] > div > .relative.flex.h-16 {
+  transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+[data-home-header] a[aria-label="Mr Yoda Health home"] svg > path:first-child,
+[data-home-header] nav a,
+[data-home-header] button,
+[data-home-header] a[href="#"] {
+  transition: color .3s ease, fill .3s ease, background-color .3s ease, border-color .3s ease, opacity .2s ease;
+}
+[data-home-header].is-scrolled > div > .relative.flex.h-16 {
+  background: #fff;
+  border-color: rgba(18, 53, 39, .1);
+  box-shadow: 0 18px 44px -30px rgba(10, 23, 18, .35);
+  backdrop-filter: blur(16px) saturate(1.25);
+}
+[data-home-header].is-scrolled a[aria-label="Mr Yoda Health home"] svg > path:first-child {
+  fill: #123527;
+}
+[data-home-header].is-scrolled nav a,
+[data-home-header].is-scrolled a[href="#"],
+[data-home-header].is-scrolled button {
+  color: #123527;
+}
+[data-home-header].is-scrolled nav a:hover { color: #0a1f16; }
+[data-home-header].is-scrolled button[aria-haspopup="listbox"] {
+  border-color: rgba(18, 53, 39, .14);
+  background: #f7f9f6;
+}
+[data-home-header].is-scrolled button[aria-haspopup="listbox"] > * { color: #123527; }
+[data-home-header].is-scrolled button[aria-haspopup="listbox"]:hover,
+[data-home-header].is-scrolled button[aria-label="Cart"]:hover,
+[data-home-header].is-scrolled button[aria-label="Open menu"]:hover {
+  background: #ecf7ee;
+}
+
+/* The hero join control keeps its green fill on hover after the intro animation. */
+.hero-join { color: #fff !important; }
+button:has(> .hero-blob):hover .hero-blob,
+button:has(> .hero-blob):focus-visible .hero-blob {
+  animation: ring-turn 11s linear infinite reverse, fill-drift 7s ease-in-out infinite !important;
+  scale: 1 !important;
+  opacity: 1 !important;
+  filter: blur(6px) !important;
+}
+button:has(> .hero-blob):hover .hero-join,
+button:has(> .hero-blob):focus-visible .hero-join {
+  animation: none !important;
+  color: #fff !important;
+}
+button:has(> .hero-blob):focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 50%; }
+@media (prefers-reduced-motion: reduce) {
+  button:has(> .hero-blob):hover .hero-blob,
+  button:has(> .hero-blob):focus-visible .hero-blob { animation: none !important; }
+}
+
+/* reveal (replaces the live site's GSAP scroll-ins) */
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.22,.7,.3,1), transform .7s cubic-bezier(.22,.7,.3,1); }
+[data-reveal].is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { [data-reveal] { opacity: 1; transform: none; transition: none; } }
+
+/* generic chip / tab used by new sections (matches the My Health tab pills) */
+.usa-chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 9999px; border: 1px solid var(--hair-strong); background: #fff; color: var(--ink-2); padding: 9px 16px; font-size: 14px; font-weight: 500; line-height: 1; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s; white-space: nowrap; }
+.usa-chip:hover { border-color: #35b34a8c; background: #ecf7ee; }
+.usa-chip.is-active { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+.usa-chip .n { opacity: .6; font-weight: 400; }
+
+/* ZIP check block */
+.zip-card { border-radius: 24px; background: #fff; border: 1px solid var(--hair); box-shadow: 0 24px 60px -40px rgba(10,23,18,.35); padding: var(--card-pad); }
+.zip-form { display: flex; gap: 10px; margin-top: 14px; }
+.zip-form input { flex: 1; min-width: 0; height: 52px; border-radius: 9999px; border: 1px solid var(--hair-strong); background: #f7f9f6; padding: 0 22px; font: inherit; font-size: 16px; color: var(--ink); outline: none; transition: border-color .2s, background-color .2s; }
+.zip-form input:focus { border-color: var(--brand); background: #fff; }
+.zip-result { margin-top: 14px; font-size: 15px; line-height: 1.55; color: var(--ink-2); min-height: 1.55em; }
+.zip-result[data-state="yes"] { color: var(--accentink); }
+.zip-result[data-state="no"] { color: var(--ink-2); }
+.zip-result[data-state="error"] { color: var(--st-attention-ink); }
+.zip-dark .zip-card { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); box-shadow: none; }
+.zip-dark .zip-form input { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.25); color: #fff; }
+.zip-dark .zip-result, .zip-dark .zip-result[data-state] { color: rgba(255,255,255,.85); }
+
+/* simple list with brand ticks, as on the plan cards */
+.usa-ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.usa-ticks li { position: relative; padding-left: 30px; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+.usa-ticks li::before { content: ""; position: absolute; left: 0; top: 3px; width: 18px; height: 18px; border-radius: 9999px; background: var(--st-optimal-tint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2308711f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat; }
+.usa-ticks.on-dark li { color: rgba(255,255,255,.82); }
+.usa-ticks.on-dark li::before { background-color: rgba(87,196,110,.18); }
+
+/* numbered list (before your draw, on the morning, ...) */
+.usa-steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+.usa-steps > li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: 20px 0; border-top: 1px solid var(--hair-strong); color: var(--ink-2); font-size: 16px; line-height: 1.6; }
+.usa-steps > li:last-child { border-bottom: 1px solid var(--hair-strong); }
+.usa-steps > li::before { content: counter(s, decimal-leading-zero); font-size: 13px; font-weight: 600; letter-spacing: .08em; color: var(--accentink); padding-top: 3px; }
+
+/* table used for Blood vs DNA */
+.usa-table { width: 100%; border-collapse: collapse; }
+.usa-table th, .usa-table td { text-align: left; padding: 18px 20px; border-bottom: 1px solid var(--hair-strong); font-size: 16px; color: var(--ink-2); }
+.usa-table th { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--accentink); font-weight: 600; }
+.usa-table td:first-child { color: var(--ink); font-weight: 500; }
+
+/* form fields (contact) */
+.usa-field { display: grid; gap: 8px; }
+.usa-field label { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.usa-field input, .usa-field select, .usa-field textarea { width: 100%; border-radius: 14px; border: 1px solid var(--hair-strong); background: #f7f9f6; padding: 14px 16px; font: inherit; font-size: 15px; color: var(--ink); outline: none; transition: border-color .2s, background-color .2s; }
+.usa-field textarea { min-height: 140px; resize: vertical; }
+.usa-field input:focus, .usa-field select:focus, .usa-field textarea:focus { border-color: var(--brand); background: #fff; }
+
+[hidden] { display: none !important; }
+
+/* What we test: intro line on each health-area card */
+.wwt-card-intro { margin-top: 6px; font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,.86); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.WhatWeTest-module__xNTvmW__card:has(.wwt-card-intro) .WhatWeTest-module__xNTvmW__cardFrost { height: 56%; }
+.WhatWeTest-module__xNTvmW__card:has(.wwt-card-intro)::after { background: linear-gradient(#0a171200 35%, #0a1712a6 100%); }
+
+/* What we test: keep the count copy readable and preserve the complete search control. */
+.WhatWeTest-module__xNTvmW__panelHeader > div:first-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 880px;
+}
+.WhatWeTest-module__xNTvmW__search { flex-shrink: 0; }
+.WhatWeTest-module__xNTvmW__railArrows button:disabled {
+  cursor: not-allowed;
+  opacity: .35;
+}
+@media (max-width: 1100px) {
+  .WhatWeTest-module__xNTvmW__panelHeader > div:first-child { max-width: none; }
+}
+
+/* ZIP field on the forest cards */
+.zip-on-dark input { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.25); color: #fff; }
+.zip-on-dark input::placeholder { color: rgba(255,255,255,.55); }
+[data-usa="card-pair"] .text-white .t-eyebrow, .bg-\[linear-gradient\(160deg\,\#123527_0\%\,\#0A1F16_100\%\)\] .t-eyebrow { color: var(--brand-bright); }
+.bg-\[linear-gradient\(160deg\,\#123527_0\%\,\#0A1F16_100\%\)\] .zip-result { color: rgba(255,255,255,.85); }
+
+/* Yodaara pinned decks (two slides crossfade while the deck is pinned) */
+.usa-pin { position: relative; height: 240vh; }
+.usa-pin > .yrd-deck-pinned { position: sticky; top: 80px; height: calc(100svh - 80px); max-width: none; width: 100%; }
+.usa-pin .yrd-slide { transition: opacity .6s ease; }
+@media (max-width: 900px) { .usa-pin { height: auto; } .usa-pin > .yrd-deck-pinned { position: relative; top: 0; height: auto; } .usa-pin .yrd-slide { position: relative !important; opacity: 1 !important; } }
+.yrd-zip { max-width: 520px; margin: 40px auto 0; text-align: left; }
+.yrd-zip .t-eyebrow { color: rgb(176, 63, 17); }
+.yrd-zip .zip-form input { background: rgba(255,255,255,.75); }
+
+/* FAQ page: space between topic groups when "All" is shown */
+[data-faq-group] + [data-faq-group] { margin-top: 48px; }
